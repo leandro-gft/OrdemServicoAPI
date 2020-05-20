@@ -1,4 +1,4 @@
-package br.com.gft.osworks.domain;
+package br.com.gft.osworks.domain.model;
 
 public enum StatusOrdemServico {
 	
