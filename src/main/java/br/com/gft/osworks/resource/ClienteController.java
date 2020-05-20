@@ -65,8 +65,7 @@ public class ClienteController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> atualizarCliente(@RequestBody Cliente cliente, @PathVariable Long id) {
-		clienteService.buscarPorId(id);
-		if (cliente != null) {
+		if (clienteService.buscarPorId(id) != null) {
 			clienteService.atualizar(cliente, id);
 			return ResponseEntity.noContent().build();
 		} else {
