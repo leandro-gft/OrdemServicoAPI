@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ClienteController {
-	
-	
+		
 	@GetMapping(value="/clientes")
 	public String listar() {
 		return "Teste";
