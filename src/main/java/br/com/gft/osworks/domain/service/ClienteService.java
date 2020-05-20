@@ -26,4 +26,8 @@ public class ClienteService {
 	public List<Cliente> buscarPorNome(String nome) {
 		return clienteRepository.findByNomeContaining(nome);
 	}
+	
+	public Cliente cadastrarCliente(Cliente cliente) {
+		return clienteRepository.save(cliente);
+	}
 }
