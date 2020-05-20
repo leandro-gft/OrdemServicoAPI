@@ -1,4 +1,4 @@
-package br.com.gft.osworks.controller;
+package br.com.gft.osworks.resource;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

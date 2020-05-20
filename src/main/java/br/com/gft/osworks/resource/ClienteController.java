@@ -1,10 +1,11 @@
-package br.com.gft.osworks.controller;
+package br.com.gft.osworks.resource;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,18 +39,25 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	@PostMapping
-	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente){
-		clienteService.cadastrarCliente(cliente);
-		return ResponseEntity.
-				created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri()).
-				body(cliente);
-	}
 
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Cliente>> buscarPorNome(@PathVariable String nome) {
 		return ResponseEntity.ok(clienteService.buscarPorNome(nome));
+	}
+
+	@PostMapping
+	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
+		clienteService.cadastrarCliente(cliente);
+		return ResponseEntity.created(
+				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri())
+				.body(cliente);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
+		clienteService.deletar(id);
+		return ResponseEntity.noContent().build();
+
 	}
 
 }

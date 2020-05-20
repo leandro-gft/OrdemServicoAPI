@@ -19,7 +19,7 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente buscarPorId(@PathVariable Long id) {
+	public Cliente buscarPorId(Long id) {
 		return clienteRepository.findById(id).orElse(null);
 	}
 
@@ -29,5 +29,9 @@ public class ClienteService {
 	
 	public Cliente cadastrarCliente(Cliente cliente) {
 		return clienteRepository.save(cliente);
+	}
+	
+	public void deletar(Long id) {
+		clienteRepository.deleteById(id);
 	}
 }
