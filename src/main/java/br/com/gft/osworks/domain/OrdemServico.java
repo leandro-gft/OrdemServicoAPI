@@ -2,6 +2,8 @@ package br.com.gft.osworks.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrdemServico {
 
@@ -10,19 +12,49 @@ public class OrdemServico {
 	private BigDecimal preco;
 	private LocalDateTime dataAbertura;
 	private LocalDateTime dataFinalizacao;
+	private StatusOrdemServico status;
+	private Cliente cliente;
+	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public OrdemServico() {
 		
 	}
 
-	public OrdemServico(Long id, String descricao, BigDecimal preco, LocalDateTime dataAbertura, LocalDateTime dataFinalizacao) {
+	public OrdemServico(Long id, String descricao, BigDecimal preco, LocalDateTime dataAbertura, LocalDateTime dataFinalizacao, List<Comentario> comentarios,  Cliente cliente, StatusOrdemServico status) {
 		this.id = id;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.dataAbertura = dataAbertura;
 		this.dataFinalizacao = dataFinalizacao;
-	}	
+		this.status = status;
+		this.cliente = cliente;
+		this.comentarios = comentarios;
+	}
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public StatusOrdemServico getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusOrdemServico status) {
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}
