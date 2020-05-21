@@ -1,5 +1,7 @@
 package br.com.gft.osworks.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,14 @@ public class OrdemServicoService {
 				orElseThrow(() -> new NegocioException("Cliente não encontrado"))
 				);
 		return osRepository.save(ordemServico);
+	}
+	
+	public List<OrdemServico> listar(){
+		return osRepository.findAll();
+	}
+	
+	public OrdemServico listarPorId(Long id){
+		return osRepository.findById(id).orElse(null);
 	}
 	
 }
