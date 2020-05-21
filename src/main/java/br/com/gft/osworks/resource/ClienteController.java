@@ -2,6 +2,8 @@ package br.com.gft.osworks.resource;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,7 +47,7 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> salvarCliente(@RequestBody @Valid Cliente cliente) {
 		clienteService.cadastrarCliente(cliente);
 		return ResponseEntity.created(
 				ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri())

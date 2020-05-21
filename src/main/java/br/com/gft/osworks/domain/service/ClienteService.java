@@ -18,7 +18,7 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente buscarPorId(Long id) {
+	public Cliente buscarPorId(Long id) {		
 		return clienteRepository.findById(id).orElse(null);
 	}
 
