@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-
+@Entity
 public class OrdemServico {
 
 	@Id
@@ -18,10 +22,16 @@ public class OrdemServico {
 	private Long id;
 	private String descricao;
 	private BigDecimal preco;
-	private LocalDateTime dataAbertura;
-	private LocalDateTime dataFinalizacao;
-	private StatusOrdemServico status;
+	private LocalDateTime dataAbertura = LocalDateTime.now();
+	private LocalDateTime dataFinalizacao;	
+	
+	@Enumerated(EnumType.STRING)
+	private StatusOrdemServico status = StatusOrdemServico.ABERTA;
+	
+	@ManyToOne
 	private Cliente cliente;
+
+	@OneToMany(mappedBy = "ordem")
 	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public OrdemServico() {

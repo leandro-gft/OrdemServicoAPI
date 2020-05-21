@@ -21,7 +21,7 @@ import br.com.gft.osworks.domain.service.ClienteService;
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClienteController {
+public class ClienteResource {
 
 	@Autowired
 	private ClienteService clienteService;

@@ -1,9 +1,12 @@
 package br.com.gft.osworks.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -21,6 +24,9 @@ public class Cliente {
 	private String email;
 	@NotBlank
 	private String telefone;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<OrdemServico> ordens;
 	
 	public Cliente() {
 		
