@@ -2,6 +2,7 @@ package br.com.gft.osworks.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +40,10 @@ public class OrdemServico {
 	private BigDecimal preco;
 	
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime dataAbertura = LocalDateTime.now();
+	private OffsetDateTime dataAbertura = OffsetDateTime.now();
 
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime dataFinalizacao;	
+	private OffsetDateTime dataFinalizacao;	
 	
 	@Enumerated(EnumType.STRING)
 	@JsonProperty(access = Access.READ_ONLY)
@@ -62,7 +63,7 @@ public class OrdemServico {
 		
 	}
 
-	public OrdemServico(Long id, String descricao, BigDecimal preco, LocalDateTime dataAbertura, LocalDateTime dataFinalizacao, List<Comentario> comentarios,  Cliente cliente, StatusOrdemServico status) {
+	public OrdemServico(Long id, String descricao, BigDecimal preco, OffsetDateTime dataAbertura, OffsetDateTime dataFinalizacao, List<Comentario> comentarios,  Cliente cliente, StatusOrdemServico status) {
 		this.id = id;
 		this.descricao = descricao;
 		this.preco = preco;
@@ -121,19 +122,19 @@ public class OrdemServico {
 		this.preco = preco;
 	}
 
-	public LocalDateTime getDataAbertura() {
+	public OffsetDateTime getDataAbertura() {
 		return dataAbertura;
 	}
 
-	public void setDataAbertura(LocalDateTime dataAbertura) {
+	public void setDataAbertura(OffsetDateTime dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 
-	public LocalDateTime getDataFinalizacao() {
+	public OffsetDateTime getDataFinalizacao() {
 		return dataFinalizacao;
 	}
 
-	public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
+	public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
 	}
 

@@ -1,6 +1,7 @@
 package br.com.gft.osworks.domain.model;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class Comentario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String descricao;
-	private LocalDateTime dataEnvio;
+	private OffsetDateTime dataEnvio;
 	
 	@ManyToOne
 	private OrdemServico ordem;
@@ -34,13 +35,13 @@ public class Comentario {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
+	}	
 
-	public LocalDateTime getDataEnvio() {
+	public OffsetDateTime getDataEnvio() {
 		return dataEnvio;
 	}
 
-	public void setDataEnvio(LocalDateTime dataEnvio) {
+	public void setDataEnvio(OffsetDateTime dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
 
