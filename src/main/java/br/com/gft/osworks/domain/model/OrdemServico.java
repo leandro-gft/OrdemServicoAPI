@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.com.gft.osworks.domain.exception.NegocioException;
+
 @Entity
 @JsonInclude(Include.NON_NULL)
 public class OrdemServico {
@@ -27,23 +29,24 @@ public class OrdemServico {
 	private String descricao;
 	private BigDecimal preco;
 	private OffsetDateTime dataAbertura = OffsetDateTime.now();
-	private OffsetDateTime dataFinalizacao;	
-	
+	private OffsetDateTime dataFinalizacao;
+
 	@Enumerated(EnumType.STRING)
 	private StatusOrdemServico status = StatusOrdemServico.ABERTA;
-	
+
 	@ManyToOne
 	private Cliente cliente;
 
 	@OneToMany(mappedBy = "ordem")
 	@JsonInclude(Include.NON_EMPTY)
 	private List<Comentario> comentarios = new ArrayList<>();
-	
+
 	public OrdemServico() {
-		
+
 	}
 
-	public OrdemServico(Long id, String descricao, BigDecimal preco, OffsetDateTime dataAbertura, OffsetDateTime dataFinalizacao, List<Comentario> comentarios,  Cliente cliente, StatusOrdemServico status) {
+	public OrdemServico(Long id, String descricao, BigDecimal preco, OffsetDateTime dataAbertura,
+			OffsetDateTime dataFinalizacao, List<Comentario> comentarios, Cliente cliente, StatusOrdemServico status) {
 		this.id = id;
 		this.descricao = descricao;
 		this.preco = preco;
@@ -53,7 +56,7 @@ public class OrdemServico {
 		this.cliente = cliente;
 		this.comentarios = comentarios;
 	}
-	
+
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -141,6 +144,24 @@ public class OrdemServico {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
-		
+	}
+
+	public boolean podeSerFinalizada() {
+		return StatusOrdemServico.ABERTA.equals(getStatus());
+	}
+
+	public boolean naoPodeSerFinalizada() {
+		return !podeSerFinalizada();
+	}
+
+	public void finalizar() {
+		if (naoPodeSerFinalizada()) {
+			throw new NegocioException("Ordem de serviço não pode ser finalizada");
+		} else {
+			setStatus(StatusOrdemServico.FINALIZADA);
+			setDataFinalizacao(OffsetDateTime.now());
+		}
+
+	}
+
 }

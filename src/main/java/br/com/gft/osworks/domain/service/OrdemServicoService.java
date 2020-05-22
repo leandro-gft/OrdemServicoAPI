@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gft.osworks.api.model.ComentarioModel;
 import br.com.gft.osworks.domain.exception.EntidadeNaoEncontradaException;
 import br.com.gft.osworks.domain.exception.NegocioException;
 import br.com.gft.osworks.domain.model.Comentario;
@@ -45,15 +44,24 @@ public class OrdemServicoService {
 	}
 	
 	public Comentario postarComentario(Long id, Comentario comentario) {
-		OrdemServico os = osRepository.findById(id).orElseThrow(()-> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada")); 
+		OrdemServico os = buscar(id); 
 		comentario.setOrdem(os);
 		return comentarioRepository.save(comentario);
 	}
 
 	public List<Comentario> listarComentarios(Long id) {
-		OrdemServico os = osRepository.findById(id).orElseThrow(()-> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada"));
-		return os.getComentarios()
-;
+		OrdemServico os = buscar(id);
+		return os.getComentarios();
 	}	
+	
+	public void finalizar(Long id) {
+		OrdemServico os = buscar(id);	
+		os.finalizar();
+		osRepository.save(os);
+	}
+
+	public OrdemServico buscar(Long id) {
+		return osRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada"));
+	}
 	
 }
