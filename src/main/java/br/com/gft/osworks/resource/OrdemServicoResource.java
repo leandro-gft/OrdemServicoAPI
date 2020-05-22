@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.gft.osworks.api.model.ComentarioModel;
 import br.com.gft.osworks.api.model.OrdemServicoInput;
 import br.com.gft.osworks.api.model.OrdemServicoModel;
 import br.com.gft.osworks.domain.model.Comentario;
@@ -55,22 +56,30 @@ public class OrdemServicoResource {
 	}
 	
 	@PostMapping("/{id}/comentarios")
-	public ResponseEntity<Comentario> postar(@PathVariable Long id, @RequestBody Comentario comentario){
-		osService.postarComentario(id, comentario);
+	public ResponseEntity<ComentarioModel> postar(@PathVariable Long id, @RequestBody Comentario comentario){
+		comentario = osService.postarComentario(id, comentario);
 		return ResponseEntity.
 				created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(comentario.getId()).toUri()).
-				body(osService.postarComentario(id, comentario));
+				body(comentarioToModel(comentario));
 	}
 	
 	
-//	@GetMapping("/{id}/comentarios")
-//	public ResponseEntity<List<Comentario>> listar(@PathVariable Long id){
-//		return ResponseEntity.ok().body(osService.listarComentarios(id));
-//		
-//	}
+	@GetMapping("/{id}/comentarios")
+	public ResponseEntity<List<ComentarioModel>> listar(@PathVariable Long id){
+		return ResponseEntity.ok().body(toComentarioList(osService.listarComentarios(id)));
+		
+	}
 
 	public OrdemServicoModel toModel(OrdemServico os) {
 		return mapper.map(os, OrdemServicoModel.class);
+	}
+	
+	public ComentarioModel comentarioToModel(Comentario comentario) {
+		return mapper.map(comentario, ComentarioModel.class);
+	}
+	
+	public List<ComentarioModel> toComentarioList(List<Comentario> comentarios){
+		return comentarios.stream().map(comentario -> comentarioToModel(comentario)).collect(Collectors.toList());
 	}
 
 	public List<OrdemServicoModel> toModelList(List<OrdemServico> os) {

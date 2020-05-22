@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -38,7 +37,6 @@ public class OrdemServico {
 
 	@OneToMany(mappedBy = "ordem")
 	@JsonInclude(Include.NON_EMPTY)
-	@JsonIgnore
 	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public OrdemServico() {
