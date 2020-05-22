@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.gft.osworks.api.model.OrdemServicoInput;
 import br.com.gft.osworks.api.model.OrdemServicoModel;
+import br.com.gft.osworks.domain.model.Comentario;
 import br.com.gft.osworks.domain.model.OrdemServico;
 import br.com.gft.osworks.domain.service.OrdemServicoService;
 
@@ -31,10 +33,10 @@ public class OrdemServicoResource {
 	private ModelMapper mapper;
 
 	@PostMapping
-	public ResponseEntity<OrdemServicoModel> criarOS(@RequestBody @Valid OrdemServico ordemServico) {
-		osService.criar(ordemServico);
+	public ResponseEntity<OrdemServicoModel> criarOS(@RequestBody @Valid OrdemServicoInput ordemServicoInput) {
+		OrdemServico os = osService.criar(toEntity(ordemServicoInput));
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(ordemServico.getId()).toUri()).body(toModel(ordemServico));
+				.buildAndExpand(ordemServicoInput.getCliente().getId()).toUri()).body(toModel(os));
 	}
 
 	@GetMapping
@@ -51,6 +53,21 @@ public class OrdemServicoResource {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	@PostMapping("/{id}/comentarios")
+	public ResponseEntity<Comentario> postar(@PathVariable Long id, @RequestBody Comentario comentario){
+		osService.postarComentario(id, comentario);
+		return ResponseEntity.
+				created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(comentario.getId()).toUri()).
+				body(osService.postarComentario(id, comentario));
+	}
+	
+	
+//	@GetMapping("/{id}/comentarios")
+//	public ResponseEntity<List<Comentario>> listar(@PathVariable Long id){
+//		return ResponseEntity.ok().body(osService.listarComentarios(id));
+//		
+//	}
 
 	public OrdemServicoModel toModel(OrdemServico os) {
 		return mapper.map(os, OrdemServicoModel.class);
@@ -58,6 +75,10 @@ public class OrdemServicoResource {
 
 	public List<OrdemServicoModel> toModelList(List<OrdemServico> os) {
 		return os.stream().map(ordemServico -> toModel(ordemServico)).collect(Collectors.toList());
+	}
+	
+	public OrdemServico toEntity(OrdemServicoInput osi) {
+		return mapper.map(osi, OrdemServico.class);
 	}
 
 }

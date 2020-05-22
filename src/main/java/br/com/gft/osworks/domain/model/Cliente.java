@@ -9,9 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import br.com.gft.osworks.domain.ValidationGroups;
 
 
 @Entity
@@ -19,7 +16,6 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull(groups = ValidationGroups.ClienteId.class)
 	private Long id;
 	@NotBlank
 	private String nome;

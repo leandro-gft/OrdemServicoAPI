@@ -13,18 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
-import br.com.gft.osworks.domain.ValidationGroups;
 
 @Entity
 @JsonInclude(Include.NON_NULL)
@@ -33,29 +25,20 @@ public class OrdemServico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
 	private String descricao;
-	@NotNull
 	private BigDecimal preco;
-	
-	@JsonProperty(access = Access.READ_ONLY)
 	private OffsetDateTime dataAbertura = OffsetDateTime.now();
-
-	@JsonProperty(access = Access.READ_ONLY)
 	private OffsetDateTime dataFinalizacao;	
 	
 	@Enumerated(EnumType.STRING)
-	@JsonProperty(access = Access.READ_ONLY)
 	private StatusOrdemServico status = StatusOrdemServico.ABERTA;
 	
 	@ManyToOne
-	@NotNull
-	@Valid
-	@ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class)
 	private Cliente cliente;
 
 	@OneToMany(mappedBy = "ordem")
 	@JsonInclude(Include.NON_EMPTY)
+	@JsonIgnore
 	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public OrdemServico() {

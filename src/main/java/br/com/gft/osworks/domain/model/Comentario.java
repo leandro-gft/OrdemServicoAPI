@@ -1,6 +1,5 @@
 package br.com.gft.osworks.domain.model;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
@@ -16,8 +15,8 @@ public class Comentario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String descricao;
-	private OffsetDateTime dataEnvio;
-	
+	private OffsetDateTime dataEnvio = OffsetDateTime.now();
+		
 	@ManyToOne
 	private OrdemServico ordem;
 
